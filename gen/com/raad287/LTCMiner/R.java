@@ -51,10 +51,10 @@ public final class R {
         public static final int settings_textView_throttle_lbl=0x7f0a0008;
         public static final int status_button_startstop=0x7f0a0023;
         public static final int status_spinner_nav=0x7f0a001d;
-        public static final int status_textView_accepted=0x7f0a001f;
+        public static final int status_textView_accepted=0x7f0a0020;
         public static final int status_textView_console=0x7f0a0025;
-        public static final int status_textView_rejected=0x7f0a0020;
-        public static final int status_textView_speed=0x7f0a001e;
+        public static final int status_textView_rejected=0x7f0a0021;
+        public static final int status_textView_speed=0x7f0a001f;
         public static final int status_textView_status=0x7f0a0022;
         public static final int tableRow1=0x7f0a000a;
         public static final int tableRow2=0x7f0a0010;
@@ -68,7 +68,7 @@ public final class R {
         public static final int textView4=0x7f0a000b;
         public static final int textView5=0x7f0a0011;
         public static final int textView6=0x7f0a000e;
-        public static final int textView7=0x7f0a0021;
+        public static final int textView7=0x7f0a001e;
     }
     public static final class layout {
         public static final int activity_settings=0x7f030000;

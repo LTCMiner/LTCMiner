@@ -1,96 +1,74 @@
 package com.miner.litecoin;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import static com.miner.litecoin.Constants.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
+import java.io.FileNotFoundException;
+
 import java.io.FileReader;
-import java.io.FileWriter;
+
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Calendar;
-import java.util.Date;
+
+
+import android.content.Context;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import com.raad287.LTCMiner.R;
+
 
 public class Console {
 	final int MSG_UIUPDATE = 1;
 	final int MSG_STATUPDATE = 2;
 	final int MSG_CONSOLE_UPDATE = 7;
-	FileReader fr;
-	BufferedReader br;
-	FileWriter fw;
-	BufferedWriter bw;
-	File logFile=new File("logfile.txt");
-
+	StringBuilder sb=new StringBuilder();
+	boolean c_new=false;
+	String[] console_a = new String[20];
+	Handler sHandler = new Handler();
 	
-	public Console()
+	public Console(Handler h)
 	 {
-		//Initialize line_array
-		
-		 try {
-			logFile.createNewFile();
-			BufferedWriter bw = new BufferedWriter(new FileWriter(logFile));
-		 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Log.i("LC", "Console: IOException"+e.getMessage());
-			e.printStackTrace();
-		} 
-			
+		Log.i("LC", "Console: Console()");
+		console_a=new String[20];
+		for (int i=0; i<20; i++) {console_a[i]="";}
+		sHandler = h;
 	 }
 
-	public void write (String string)
+	public void write (String s)
 	{
-		Calendar c = Calendar.getInstance();
-		Date d = c.getTime();
-		String dateTag = Integer.toString(c.get(Calendar.MONTH))+Integer.toString(c.get(Calendar.DAY_OF_WEEK_IN_MONTH))+
-						 Integer.toString(c.get(Calendar.HOUR_OF_DAY))+Integer.toString(c.get(Calendar.MINUTE))+
-						 Integer.toString(c.get(Calendar.SECOND));
-			try {
-				//insert timestamp code here
-				bw.append(dateTag+":"+string);
-				bw.newLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		Message msg = new Message();
+		Bundle bundle = new Bundle();
+		
+		Log.i("LC", "Console: write():"+s);
+		if(s!=null)
+		{
+			for (int i=19; i>0; i--) {console_a[i]=console_a[i-1]; }
+			console_a[0]=s;
+		}
+		msg.arg1=MSG_CONSOLE_UPDATE;
+		bundle.putString("console", getConsole());
+		msg.setData(bundle);
+		sHandler.sendMessage(msg);
 	}
 
-	public String last20() 
+	public String getConsole()
 	{
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(logFile));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "";
-		}
-		StringBuilder sb = new StringBuilder();
-		int count=0;
-		String line="";
-		while (line!=null && count<20)
+		sb=new StringBuilder();
+		for (int i=0; i<20; i++)
 		{
-			try {
-				line=br.readLine();
-				sb.append(line);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			count++;
+			sb.append(console_a[i]+'\n');
 		}
 		return sb.toString();
-	
 	}
 		
-	}
+}
+
+		
+	
 

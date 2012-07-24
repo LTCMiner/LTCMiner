@@ -13,15 +13,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import com.miner.litecoin.MainActivity;
 import com.raad287.LTCMiner.R;
 
 public class Miner implements Observer {
-	private static final String DEFAULT_URL = "http://127.0.0.1:9332/";
-	private static final String DEFAULT_AUTH = "rpcuser:rpcpass";
 	private static final long DEFAULT_SCAN_TIME = 5000;
 	private static final long DEFAULT_RETRY_PAUSE = 30000;
-	private Thread t;
+
 	private Worker worker;
 	private long lastWorkTime;
 	private long lastWorkHashes;
@@ -31,6 +28,7 @@ public class Miner implements Observer {
 	public int priority=1;
 	private Handler mainHandler;
 	private Console console;
+	private Thread t;
 	
 	public String status="Not Mining";
 	final int MSG_UIUPDATE = 1;
@@ -44,6 +42,7 @@ public class Miner implements Observer {
 	
 	public Miner(String url, String auth, long scanTime, long retryPause, 
 			     int nThread, double throttle, int pri, Handler h, Console c) {
+		Log.i("LC", "Miner:Miner()");
 		status="Connecting";
 		speed=0.0f;
 		mainHandler=h;
@@ -79,8 +78,9 @@ public class Miner implements Observer {
 	
 	public void start()
 	{
+		Log.i("LC", "Miner:start()");
 		
-		Thread t = new Thread(worker);
+		t = new Thread(worker);
 		worker.addObserver(this);
 		t.setPriority(priority);
 		Log.i("LC", "Starting Worker Thread");
@@ -89,14 +89,11 @@ public class Miner implements Observer {
 	}
 	
 	
-	public float getSpeed() {
-		return speed;
-	}
-	
 	public void stop () {
-		Log.i("LC","Miner Stop");
+		Log.i("LC", "Miner:stop()");
 		console.write("Miner: Worker stopping...");
 		worker.stop();
+		t.interrupt();
 		speed=0;
 	}
 		

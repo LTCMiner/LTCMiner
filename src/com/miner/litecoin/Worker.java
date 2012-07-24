@@ -126,20 +126,16 @@ public class Worker extends Observable implements Runnable {
 				Log.i("LC", "Longpoller disconnected");
 				console.write("Worker: Longpoller disconnected");
 			}
-			try 
-			{
-				for (Thread t : threads) {
+			for (Thread t : threads) {
 					if (t != null) {
 			
 						Log.i("LC", "Worker: Killing thread ID: "+t.getId());
 						console.write("Worker: Killing thread ID: "+t.getId());
-						t.join((long) 200); // Work Threads have 200ms to finish
+						t.interrupt();
 					}
-				}
-				Log.i("LC", "Worker: Threads Killed");
-				console.write("Worker: Threads killed");
 			}
-			catch (InterruptedException e) { }
+			Log.i("LC", "Worker: Threads Killed");
+			console.write("Worker: Threads killed");
 		curWork = null;
 		setChanged();
 		notifyObservers(Notification.TERMINATED);

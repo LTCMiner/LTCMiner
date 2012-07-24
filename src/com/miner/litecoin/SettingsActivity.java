@@ -1,5 +1,6 @@
 package com.miner.litecoin;
 
+import static com.miner.litecoin.Constants.*;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
