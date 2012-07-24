@@ -39,7 +39,7 @@ public class StatusActivity extends MainActivity {
     	   // Log.i("LC", "StatusActivity:updateSpeed");
            	TextView tv_speed = (TextView) findViewById(R.id.status_textView_speed);
            	DecimalFormat df = new DecimalFormat("#.##");
-           	tv_speed.setText(df.format(mService.speed)+unit);
+           	tv_speed.setText(df.format(mService.speed*1000)+unit);
        } 
     };
     final Runnable rAccepted = new Runnable() {
@@ -111,6 +111,9 @@ public class StatusActivity extends MainActivity {
 			statusHandler.post(rAccepted);
 			statusHandler.post(rRejected);
 			statusHandler.post(rStatus);
+			if(mService.running==true) { statusHandler.post(rBtnStop); }
+			else {statusHandler.post(rBtnStart);
+			}
 		} }
 	};
 	
@@ -164,8 +167,12 @@ public class StatusActivity extends MainActivity {
 		if(updateThread.isAlive()==true) { updateThread.interrupt(); }
 		
 		SharedPreferences settings = getSharedPreferences(PREF_TITLE, 0);
-    	if(settings.getBoolean(PREF_BACKGROUND,DEFAULT_BACKGROUND )==false
-    	   && mService.running==true) { stopMining(); }
+    	if(settings.getBoolean(PREF_BACKGROUND,DEFAULT_BACKGROUND )==false)
+    	{
+    		if (mService.running==true) { stopMining(); }
+    		Intent intent = new Intent(getApplicationContext(), MinerService.class);
+    		stopService(intent);
+    	}
 		
 		Log.i("LC", "Main: in onStop()");
     	try {

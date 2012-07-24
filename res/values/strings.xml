@@ -28,6 +28,6 @@
     <string name="status_button_start">Start Mining</string>
     <string name="status_textview_speed">Speed:</string>
     <string name="settings_textview_threadpriority">Thread Priority:</string>
-    <string name="version">Version: 0.2</string>
+    <string name="version">Version: 0.3</string>
 
 </resources>
