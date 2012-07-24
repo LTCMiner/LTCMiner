@@ -1,7 +1,14 @@
 package com.miner.litecoin;
 
+import static com.miner.litecoin.Constants.DEFAULT_BACKGROUND;
+import static com.miner.litecoin.Constants.PREF_BACKGROUND;
+import static com.miner.litecoin.Constants.PREF_TITLE;
+
 import java.text.DecimalFormat;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -114,6 +121,10 @@ public class StatusActivity extends MainActivity {
     	setContentView(R.layout.activity_status);
     	Log.i("LC", "Status: onCreate");
     	
+    	Intent intent = new Intent(getApplicationContext(), MinerService.class);
+    	startService(intent);
+    	bindService(intent, super.mConnection, Context.BIND_AUTO_CREATE);
+    	
     	Button btn_startStop = (Button) findViewById(R.id.status_button_startstop);
     	
     	//Setup nav spinner
@@ -151,6 +162,21 @@ public class StatusActivity extends MainActivity {
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		if(updateThread.isAlive()==true) { updateThread.interrupt(); }
+		
+		SharedPreferences settings = getSharedPreferences(PREF_TITLE, 0);
+    	if(settings.getBoolean(PREF_BACKGROUND,DEFAULT_BACKGROUND )==false
+    	   && mService.running==true) { stopMining(); }
+		
+		Log.i("LC", "Main: in onStop()");
+    	try {
+    		unbindService(mConnection); 
+    	} catch (RuntimeException e) {
+    		Log.i("LC", "RuntimeException:"+e.getMessage());
+    		//unbindService generates a runtime exception sometimes
+    		//the service is getting unbound before unBindService is called
+    		//when the window is dismissed by the user, this is the fix
+    	}
+    
 		super.onStop();
 	}
 	

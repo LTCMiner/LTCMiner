@@ -20,6 +20,7 @@ public class Constants {
 	public static final String PREF_SERVICE = "SERVICE";
 	public static final String PREF_TITLE="SETTINGS"; 
 	public static final String PREF_PRIORITY="PRIORITY";
+	public static final String PREF_BACKGROUND="BACKGROUND";
 	public static final String DEFAULT_URL="http://litecoinpool.org:9332";
 	public static final String DEFAULT_USER="Username";
 	public static final String DEFAULT_PASS="Password";
@@ -32,5 +33,5 @@ public class Constants {
 	public static final long DEFAULT_RETRYPAUSE=500;
 	public static final float DEFAULT_THROTTLE=1;
 	public static final boolean DEFAULT_DONATE = false;
-	public static final boolean DEFAULT_SERVICE = false;
+	public static final boolean DEFAULT_BACKGROUND = false;
 }

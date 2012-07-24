@@ -16,7 +16,7 @@
     <string name="settings_threads_lbl">Threads:</string>
     <string name="settings_scantime_lbl">Scan Time (ms):</string>
     <string name="settings_retrypause_lbl">Retry Pause (ms):</string>
-    <string name="settings_service_lbl">Run as service</string>
+    <string name="settings_service_lbl">Run in Background</string>
     <string name="settings_donate_lbl">Donate</string>
     <string name="settings_button_save">Save</string>
     <string name="settings_button_default">Restore Defaults</string>

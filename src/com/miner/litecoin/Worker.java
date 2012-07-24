@@ -111,11 +111,7 @@ public class Worker extends Observable implements Runnable {
 
 					this.wait(Math.min(scanTime, Math.max(1L, WORK_TIMEOUT - curWork.getAge())));
 				} catch (InterruptedException e) {
-					
 					}
-				 catch (NullPointerException e) { 
-					Log.i("LC", "In Worker: Null Pointer Exception"+e.getMessage());
-				}
 			} while (running);
 			running = false;
 			Log.i("LC", "Worker run loop exited");
@@ -213,47 +209,49 @@ public class Worker extends Observable implements Runnable {
 		}
 		
 		private class WorkChecker implements Runnable {
-		private static final long THROTTLE_WAIT_TIME = 100L * 1000000L; // ns
-		private int index;
-		private int step;
-		public WorkChecker(int index) {
-		this.index = index;
-		for (step = 1; step < nThreads; step <<= 1);
-		}
-		public void run() {
-		try {
-		Hasher hasher = new Hasher();
-		int nonce = index;
-		long dt, t0 = System.nanoTime();
-		while (running) {
-		try {
-		if (curWork.meetsTarget(nonce, hasher)) {
-			new Thread(new WorkSubmitter(curWork, nonce)).start();
-		if (lpUrl == null) {
-		synchronized (Worker.this) {
-		curWork = null;
-		Worker.this.notify();
-		}
-		}
-		}
-		nonce += step;
-		hashes.incrementAndGet();
-		if (throttleFactor > 0.0 && (dt = System.nanoTime() - t0) > THROTTLE_WAIT_TIME) {
-		LockSupport.parkNanos(Math.max(0L, (long) (throttleFactor * dt)));
-		t0 = System.nanoTime();
-		}
-		} catch (NullPointerException e) {
-		try {
-		Thread.sleep(1L);
-		} catch (InterruptedException ie) { }
-		}
-		}
-		} catch (GeneralSecurityException e) {
-		setChanged();
-		notifyObservers(Notification.SYSTEM_ERROR);
-		stop();
-		}
-		}
+			private static final long THROTTLE_WAIT_TIME = 100L * 1000000L; // ns
+			private int index;
+			private int step;
+			
+			public WorkChecker(int index) {
+				this.index = index;
+				for (step = 1; step < nThreads; step <<= 1);
+			}
+		
+			public void run() {
+				try {
+					Hasher hasher = new Hasher();
+					int nonce = index;
+					long dt, t0 = System.nanoTime();
+					while (running) {
+						try {
+							if (curWork.meetsTarget(nonce, hasher)) {
+								new Thread(new WorkSubmitter(curWork, nonce)).start();
+								if (lpUrl == null) {
+									synchronized (Worker.this) {
+										curWork = null;
+										Worker.this.notify();
+									}
+								}
+							}
+							nonce += step;
+							hashes.incrementAndGet();
+							if (throttleFactor > 0.0 && (dt = System.nanoTime() - t0) > THROTTLE_WAIT_TIME) {
+								LockSupport.parkNanos(Math.max(0L, (long) (throttleFactor * dt)));
+								t0 = System.nanoTime();
+							}
+						} catch (NullPointerException e) {
+							try {
+								Thread.sleep(1L);
+							} catch (InterruptedException ie) { }
+						}
+					}
+				} catch (GeneralSecurityException e) {
+					setChanged();
+					notifyObservers(Notification.SYSTEM_ERROR);
+					stop();
+				}
+			}
 		}
 		
 		private class WorkSubmitter implements Runnable {

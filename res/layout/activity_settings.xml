@@ -160,12 +160,11 @@
                 android:id="@+id/tableRow4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
-
+
                 <CheckBox
                     android:id="@+id/settings_checkBox_background"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="false"
                     android:text="@string/settings_service_lbl" />
 
                 <CheckBox

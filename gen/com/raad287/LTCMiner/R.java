@@ -37,8 +37,8 @@ public final class R {
         public static final int settings_btn_default=0x7f0a001c;
         public static final int settings_btn_load=0x7f0a001b;
         public static final int settings_btn_save=0x7f0a001a;
+        public static final int settings_checkBox_background=0x7f0a0017;
         public static final int settings_checkBox_donate=0x7f0a0018;
-        public static final int settings_checkBox_service=0x7f0a0017;
         public static final int settings_editText_pass=0x7f0a0007;
         public static final int settings_editText_retrypause=0x7f0a0015;
         public static final int settings_editText_scantime=0x7f0a0012;

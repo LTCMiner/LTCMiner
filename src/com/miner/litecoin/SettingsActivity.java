@@ -64,7 +64,7 @@ public class SettingsActivity extends MainActivity {
 		sb_throttle.setProgress((int) (DEFAULT_THROTTLE*100));
 		spn_priority.setSelection(0);	// min priority
 		
-		cb_service.setChecked(DEFAULT_SERVICE);
+		cb_service.setChecked(DEFAULT_BACKGROUND);
 		cb_donate.setChecked(DEFAULT_DONATE);
 		Log.i("LC", "Settings: defaults loaded");
 		
@@ -106,7 +106,7 @@ public class SettingsActivity extends MainActivity {
 			editor.putFloat(PREF_THROTTLE, throttle);
 			editor.putLong(PREF_SCANTIME, scantime);
 			editor.putLong(PREF_RETRYPAUSE, retrypause);
-			editor.putBoolean(PREF_SERVICE, cb_service.isChecked());
+			editor.putBoolean(PREF_BACKGROUND, cb_service.isChecked());
 			editor.putBoolean(PREF_DONATE, cb_donate.isChecked());
 			
 			Log.i("LC", "Settings: Pri "+(String)spn_priority.getSelectedItem());
@@ -141,7 +141,7 @@ public class SettingsActivity extends MainActivity {
 		et_scanTime.setText( sb.append( settings.getLong(PREF_SCANTIME, DEFAULT_SCANTIME)).toString());
 		sb.setLength(0);
 		et_retryPause.setText( sb.append( settings.getLong(PREF_RETRYPAUSE, DEFAULT_RETRYPAUSE)).toString());
-		cb_service.setChecked( settings.getBoolean(PREF_SERVICE, DEFAULT_SERVICE));
+		cb_service.setChecked( settings.getBoolean(PREF_BACKGROUND, DEFAULT_BACKGROUND));
 		cb_donate.setChecked( settings.getBoolean(PREF_DONATE, DEFAULT_DONATE));
 		
 		if(settings.getInt(PREF_PRIORITY, DEFAULT_PRIORITY)==Thread.MIN_PRIORITY) {spn_priority.setSelection(0);}
@@ -277,7 +277,7 @@ public class SettingsActivity extends MainActivity {
 		et_scanTime = (EditText) findViewById(R.id.settings_editText_scantime);
 		et_retryPause= (EditText) findViewById(R.id.settings_editText_retrypause);
 		sb_throttle = (SeekBar) findViewById(R.id.settings_seekBar_throttle);
-		cb_service = (CheckBox) findViewById(R.id.settings_checkBox_service);
+		cb_service = (CheckBox) findViewById(R.id.settings_checkBox_background);
 		cb_donate = (CheckBox) findViewById(R.id.settings_checkBox_donate);
 		btn_default = (Button) findViewById(R.id.settings_btn_default);
 		btn_save = (Button) findViewById(R.id.settings_btn_save);
