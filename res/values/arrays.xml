@@ -3,6 +3,7 @@
     <string-array name="nav">
         <item >Status</item>
         <item >Settings</item>
+        <item >News</item>
     </string-array>
     <string-array name="priority">
         <item >MIN_PRIORITY</item>
