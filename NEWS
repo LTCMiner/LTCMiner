@@ -1,30 +1,32 @@
 NEWS
+10/16/12
+-v0.4.1 : Bug fix, application locked in portrait mode until a better solution is found.
+
+10/15/12
+-Portrait/Landscape UI switch causes unpredictable behavior, issue being worked on.
+-Prevent portrait / landscape UI switch in phone settings to avoid this bug. 
+
 10/13/12
---------
 -Uploaded v0.4 to market under new keystore due to hard drive failure
 
 10/12/12
---------
 -LTCMiner is now officially open source and can be found at: 
-    github.com/ltcminer/ltcminer/
+github.com/ltcminer/ltcminer/
+
 Check it out if your interested in the project. 
-If you would to like get involved , with development; 
-you can send an email to raad287@gmail.com for push access.
+If you would to like get involved with development you can send an email to raad287@gmail.com for push access.
 Contributions, suggestions, complaints, bugs, etc are all welcomed.
 
 CHANGES
 
 Version 0.4
------------
 -Added news section, set to display first on startup only once, the status screen is still the default.
 -If the news screen continues to pop up first or pops up for any unwanted reason, please report the issue.
 
 Version 0.3.1
--------------
 -Added run in background label to status screen
 
 Version 0.3
------------
 -Miner now runs in a service and can run in the background at all times.
 The default is to stop mining and kill the mining threads when the status screen is left. 
 Check "Run in Background" in settings to change this.
@@ -32,7 +34,6 @@ Check "Run in Background" in settings to change this.
 -Write External Storage permission removed until logging is implemented.
 
 Version 0.2
------------
 -Minimum API level reduced to 3 (Android 1.5)
 
 EOF
