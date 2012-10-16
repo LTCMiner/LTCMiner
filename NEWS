@@ -18,6 +18,8 @@ If you would to like get involved with development you can send an email to raad
 Contributions, suggestions, complaints, bugs, etc are all welcomed.
 
 CHANGES
+Version 0.4.1
+-App UI locked to portrait mode for all activities
 
 Version 0.4
 -Added news section, set to display first on startup only once, the status screen is still the default.
