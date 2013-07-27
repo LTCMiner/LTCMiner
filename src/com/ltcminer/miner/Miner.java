@@ -142,7 +142,7 @@ public class Miner implements Observer {
 		else if (n == Worker.Notification.AUTHENTICATION_ERROR) {
 			android.util.Log.i("LC", "Invalid worker username or password");
 			status="Error";
-			console.write("Miner: Authenticaion error");
+			console.write("Miner: Authentication error");
 			bundle.putString("status", status);
 			msg.arg1=MSG_STATUS_UPDATE;
 			msg.setData(bundle);
